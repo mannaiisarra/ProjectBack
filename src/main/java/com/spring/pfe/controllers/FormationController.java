@@ -74,7 +74,7 @@ public class FormationController {
     }
 
     @PutMapping("/updateFormation/{id}")
-    public Response<Formation> updateFormation(@PathVariable("id") Long id, @RequestBody Formation f) {
+    public Response<Formation> updateFormation(@PathVariable("id") Long id, Formation f,@RequestParam("file") MultipartFile file) {
         try {
 
             Formation oldUser = FormationRepository.findById(id).orElse(null);
@@ -84,6 +84,8 @@ public class FormationController {
             f.setDate_deDebut(f.getDate_deDebut() == null ? oldUser.getDate_deDebut() : f.getDate_deDebut());
             f.setDate_defin(f.getDate_defin() == null ? oldUser.getDate_defin() : f.getDate_defin());
             f.setId(id);
+            f.setPhoto(file.getOriginalFilename());
+            storageService.store(file,file.getOriginalFilename());
             return new Response<Formation>("200","Formation updated", FormationRepository.save(f));
         }catch (Exception e){
             return new Response<Formation>("406", e.getMessage(), null);

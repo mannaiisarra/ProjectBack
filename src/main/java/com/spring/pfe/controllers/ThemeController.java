@@ -42,7 +42,7 @@ public class ThemeController {
     }
 
 
-    @DeleteMapping("/deleteUser/{id}")
+    @DeleteMapping("/deleteTheme/{id}")
     public Response<Theme> ThemeUser (@PathVariable("id") Long  id){
 
         iTheme.deleteById(id);
@@ -64,7 +64,7 @@ public class ThemeController {
         }
     }
 
-    @PutMapping("/updateUser/{id}")
+    @PutMapping("/updateTheme/{id}")
     public Response<Theme> updateUsers(@PathVariable("id") Long id, @RequestBody Theme c) {
         try {
 

@@ -51,6 +51,8 @@ public class AuthController {
     JwtUtils jwtUtils;
     @Autowired
     private StorageService storageService;
+    @Autowired
+    private RoleRepository irole;
 
 
     @PostMapping("/signin")
@@ -99,12 +101,15 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 signUpRequest.getPhone(),
                 signUpRequest.getAdress(),
+                signUpRequest.getPhoto(),
 
                 encoder.encode(signUpRequest.getPassword()));
 
         Set<String> strRoles = signUpRequest.getRole();
+        System.out.println("here roles string : " + strRoles );
+        System.out.println("here roles : " + signUpRequest.getRole() );
         Set<Role> roles = new HashSet<>();
-
+        System.out.println("here roles string : " + roles );
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ADMIN)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -112,13 +117,13 @@ public class AuthController {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "admin":
+                    case "2":
                         Role adminRole = roleRepository.findByName(ERole.APPRENANT)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
-                    case "mod":
+                    case "1":
                         Role modRole = roleRepository.findByName(ERole.FORMATEUR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
@@ -171,7 +176,7 @@ public class AuthController {
     public Response<User> findById(@PathVariable Long id){
             try {
 
-        return new Response<User>("200", "Get all Categories", userRepository.findById(id).orElse(null));
+        return new Response<User>("200", "Get all users", userRepository.findById(id).orElse(null));
     }catch (Exception e){
         return new Response<User>("406", e.getMessage(), null);
 
@@ -188,7 +193,8 @@ public class AuthController {
         c.setEmail(c.getEmail() == null ? oldUser.getEmail() : c.getEmail());
         c.setAdress(c.getAdress() == null ? oldUser.getAdress() : c.getAdress());
         c.setAdress(c.getPhone() == null ? oldUser.getPhone() : c.getPhone());
-        c.setPassword(c.getPassword() == null ? oldUser.getPassword() : c.getPassword());
+        c.setPassword(oldUser.getPassword());
+        c.setRoles(oldUser.getRoles());
         c.setPhoto(c.getPhoto() == null ? oldUser.getPhoto() : c.getPhoto());
         c.setId(id);
             return new Response<User>("200","User updated", userRepository.save(c));
@@ -203,13 +209,13 @@ public class AuthController {
         }
     }
     @PostMapping("/add")
-    public Response<User> addCategory(User c, @RequestParam("file") MultipartFile file) {
+    public Response<User> addUser(User c, @RequestParam("file") MultipartFile file) {
 
         Date d=new Date();
         String date=""+d.getDay()+d.getMonth()+d.getYear()+d.getHours()+d.getMinutes()+d.getSeconds();
         c.setPhoto(date+file.getOriginalFilename());
         storageService.store(file,date+file.getOriginalFilename());
-        return  new Response<User>("200","create category",userRepository.save(c));
+        return  new Response<User>("200","create user",userRepository.save(c));
     }
 
     @GetMapping("/files/{filename:.+}")
@@ -220,6 +226,19 @@ public class AuthController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
                 .body(file);
     }
+    @GetMapping("/roles")
+    public Response<List<Role>> findAllRoles (){
+        // return /*iCategory.findAll();*/
+
+        try {
+
+            return new Response<List<Role>>("200", "Get all Categories", irole.findAll());
+        }catch (Exception e){
+            return new Response<List<Role>>("406", e.getMessage(), null);
+
+        }
+    }
+
 
 }
 

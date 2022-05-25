@@ -31,13 +31,11 @@ public class Formation implements Serializable {
     @Column(name = "photo", nullable = false)
     private  String photo;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
-    private Date date_deDebut;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @LastModifiedDate
-    private Date date_defin;
+    private String date_deDebut;
+
+
+    private String date_defin;
 
 
     @ManyToMany
@@ -50,21 +48,7 @@ public class Formation implements Serializable {
     @OneToMany(targetEntity = Theme.class, cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "formation")
     private List<Theme> themes = new ArrayList<>();
 
-    public Date getDate_deDebut() {
-        return date_deDebut;
-    }
 
-    public void setDate_deDebut(Date date_deDebut) {
-        this.date_deDebut = date_deDebut;
-    }
-
-    public Date getDate_defin() {
-        return date_defin;
-    }
-
-    public void setDate_defin(Date date_defin) {
-        this.date_defin = date_defin;
-    }
 
     public String getTitre() {
         return titre;
@@ -72,6 +56,22 @@ public class Formation implements Serializable {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public String getDate_deDebut() {
+        return date_deDebut;
+    }
+
+    public void setDate_deDebut(String date_deDebut) {
+        this.date_deDebut = date_deDebut;
+    }
+
+    public String getDate_defin() {
+        return date_defin;
+    }
+
+    public void setDate_defin(String date_defin) {
+        this.date_defin = date_defin;
     }
 
     public long getId() {
