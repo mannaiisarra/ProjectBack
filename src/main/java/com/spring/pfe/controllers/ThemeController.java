@@ -4,6 +4,7 @@ package com.spring.pfe.controllers;
 import com.spring.pfe.models.Formation;
 import com.spring.pfe.models.Response;
 import com.spring.pfe.models.Theme;
+import com.spring.pfe.repository.FormationRepository;
 import com.spring.pfe.repository.ThemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,15 @@ public class ThemeController {
 
     @Autowired
     private ThemeRepository iTheme;
-    @RequestMapping(value="/add", method= RequestMethod.POST)
-    public Response<Theme> addTheme(@RequestBody /*@RequestParam("file") MultipartFile file*/Theme t) {
+    @Autowired
+    private FormationRepository formationRepository;
+
+    @RequestMapping(value="/add/{id_formation}", method= RequestMethod.POST)
+    public Response<Theme> addTheme(@RequestBody /*@RequestParam("file") MultipartFile file*/Theme t , @PathVariable Long id_formation) {
         try {
             if(t!=null) {
+                Formation f = formationRepository.findById(id_formation).orElse(null);
+                t.setFormation(f);
               /*  String fileName = storageService.fileName(file);
                 storageService.store(file,fileName);
                 f.setPhoto(fileName);*/
@@ -76,6 +82,14 @@ public class ThemeController {
             return new Response<Theme>("406", e.getMessage(), null);
 
         }
+    }
+
+    @GetMapping("/chercher/{id}")
+    public Response<List<Theme>> getAllCategoryByName(@PathVariable("id") Long id) {
+
+        System.out.println(id);
+        return  new Response<List<Theme>>("200","get formation by theme",iTheme.getAllThemeByFormation(id));
+
     }
 
 

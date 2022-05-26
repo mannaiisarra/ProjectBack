@@ -138,10 +138,9 @@ public class AuthController {
         }
 
         user.setRoles(roles);
-        Date d=new Date();
-        String date=""+d.getDay()+d.getMonth()+d.getYear()+d.getHours()+d.getMinutes()+d.getSeconds();
-        user.setPhoto(date+file.getOriginalFilename());
-        storageService.store(file,date+file.getOriginalFilename());
+
+        user.setPhoto(file.getOriginalFilename());
+        storageService.store(file,file.getOriginalFilename());
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

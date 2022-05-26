@@ -84,6 +84,7 @@ public class FormationController {
             f.setDate_deDebut(f.getDate_deDebut() == null ? oldUser.getDate_deDebut() : f.getDate_deDebut());
             f.setDate_defin(f.getDate_defin() == null ? oldUser.getDate_defin() : f.getDate_defin());
             f.setId(id);
+
             f.setPhoto(file.getOriginalFilename());
             storageService.store(file,file.getOriginalFilename());
             return new Response<Formation>("200","Formation updated", FormationRepository.save(f));
