@@ -2,6 +2,7 @@ package com.spring.pfe.controllers;
 
 
 import com.spring.pfe.models.Etape;
+import com.spring.pfe.models.Formation;
 import com.spring.pfe.models.Response;
 import com.spring.pfe.models.Theme;
 import com.spring.pfe.repository.EtapeRepository;
@@ -11,12 +12,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/etape")
 public class EtapeController {
     @Autowired
     private EtapeRepository iTape;
+    @Autowired
+    private ThemeRepository iTheme;
 
     @GetMapping("/")
     public Response<List<Etape>> findAllFormation () {
@@ -24,10 +27,12 @@ public class EtapeController {
         return new Response<List<Etape>>("200", "Get all etapes", iTape.findAll());
     }
 
-    @RequestMapping(value="/add", method= RequestMethod.POST)
-    public Response<Etape> addEtape(@RequestBody Etape p) {
+    @RequestMapping(value="/add/{theme_id}", method= RequestMethod.POST)
+    public Response<Etape> addEtape(@RequestBody Etape p,@PathVariable Long theme_id) {
         try {
             if(p!=null) {
+                Theme t = iTheme.findById(theme_id).orElse(null);
+                p.setTheme(t);
 
                 return new Response<Etape>("200", "Creat Etape", iTape.save(p));
             } else {
@@ -75,7 +80,12 @@ public class EtapeController {
         }
     }
 
+    @GetMapping("/chercher/{id}")
+    public Response<List<Etape>> getAllEtapeByTheme(@PathVariable("id") Long id) {
 
+        return  new Response<List<Etape>>("200","get formation by theme",iTape.getAllEtapeByTheme(id));
+
+    }
 
 
 }

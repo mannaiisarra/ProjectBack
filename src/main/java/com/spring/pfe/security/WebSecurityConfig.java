@@ -58,9 +58,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+
+                //.antMatchers("/api/auth/findby/**").permitAll()
                 .antMatchers("/formation/**").permitAll()
                 .antMatchers("/theme/**").permitAll()
                 .antMatchers("/etape/**").permitAll()
+                .antMatchers("/formation/demande/**/**").permitAll()
 
 
 

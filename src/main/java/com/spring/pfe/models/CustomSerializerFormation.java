@@ -25,7 +25,7 @@ public class CustomSerializerFormation extends StdSerializer<Formation> {
             throws IOException, JsonProcessingException {
         Formation theme=new Formation();
         theme.setId(item.getId());
-        theme.setId(item.getId());
+
         theme.setTitre(item.getTitre());
         theme.setDescription(item.getDescription());
         generator.writeObject(theme);

@@ -1,6 +1,8 @@
 package com.spring.pfe.models;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -44,12 +46,15 @@ public class User  implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
 
-    @ManyToMany
+    @OneToMany(targetEntity = Demande.class, cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "users")
+    private List<Demande> demandes;
+
+    /*@ManyToMany
     @JoinTable( name = "users_formation",
             joinColumns = @JoinColumn( name = "id_User" ),
             inverseJoinColumns = @JoinColumn( name = "id_fomation" ) )
     private List<Formation> formation = new ArrayList<>();
-
+*/
 
     public User(String username, String email, String password) {
         this.username = username;
@@ -130,6 +135,23 @@ public class User  implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public List<Demande> getDemandes() {
+        return demandes;
+    }
+
+    public void setDemandes(List<Demande> demandes) {
+        this.demandes = demandes;
+    }
+/*
+    public List<Formation> getFormation() {
+        return formation;
+    }
+
+    public void setFormation(List<Formation> formation) {
+        this.formation = formation;
+    }
+    */
 
     public User() {
     }

@@ -2,7 +2,9 @@ package com.spring.pfe.controllers;
 
 import com.spring.pfe.models.Formation;
 import com.spring.pfe.models.Response;
+import com.spring.pfe.models.User;
 import com.spring.pfe.repository.FormationRepository;
+import com.spring.pfe.repository.UserRepository;
 import com.spring.pfe.utils.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +25,8 @@ public class FormationController {
     @Autowired
     private FormationRepository FormationRepository;
     @Autowired
+    private UserRepository iuser;
+    @Autowired
     private StorageService storageService;
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
@@ -32,6 +37,22 @@ public class FormationController {
                 String date=""+d.getDay()+d.getMonth()+d.getYear()+d.getHours()+d.getMinutes()+d.getSeconds();
                 p.setPhoto(date+file.getOriginalFilename());
                 storageService.store(file,date+file.getOriginalFilename());
+                return new Response<Formation>("200", "Creat formation", FormationRepository.save(p));
+            } else {
+                return new Response<Formation>("500", "formation not found", null);
+            }
+        } catch (Exception e) {
+            return new Response<Formation>("406", e.getMessage(), null);
+        }
+
+    }
+    @RequestMapping(value="/adUser", method= RequestMethod.POST)
+    public Response<Formation> addUser(Formation p, @RequestParam("id_user") Long id_user) {
+        try {
+            if(p!=null) {
+             User u = iuser.findById(id_user).orElse(null);
+             System.out.println(u);
+
                 return new Response<Formation>("200", "Creat formation", FormationRepository.save(p));
             } else {
                 return new Response<Formation>("500", "formation not found", null);

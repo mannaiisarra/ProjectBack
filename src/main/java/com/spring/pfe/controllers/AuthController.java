@@ -20,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -173,29 +174,29 @@ public class AuthController {
 
     @GetMapping("/findById/{id}")
     public Response<User> findById(@PathVariable Long id){
-            try {
+        try {
 
-        return new Response<User>("200", "Get all users", userRepository.findById(id).orElse(null));
-    }catch (Exception e){
-        return new Response<User>("406", e.getMessage(), null);
+            return new Response<User>("200", "Get all users", userRepository.findById(id).orElse(null));
+        }catch (Exception e){
+            return new Response<User>("406", e.getMessage(), null);
 
-    }
+        }
     }
 
     @PutMapping("/updateUser/{id}")
     public Response<User> updateUsers(@PathVariable("id") Long id, @RequestBody User c) {
         try {
-       // System.out.println("here update  id is "+id+" aadress is  "+c.getAdress());
-        //User oldUser = new User();
-        User oldUser = userRepository.findById(id).orElse(null);
-        c.setUsername(c.getUsername() == null ? oldUser.getUsername() : c.getUsername());
-        c.setEmail(c.getEmail() == null ? oldUser.getEmail() : c.getEmail());
-        c.setAdress(c.getAdress() == null ? oldUser.getAdress() : c.getAdress());
-        c.setAdress(c.getPhone() == null ? oldUser.getPhone() : c.getPhone());
-        c.setPassword(oldUser.getPassword());
-        c.setRoles(oldUser.getRoles());
-        c.setPhoto(c.getPhoto() == null ? oldUser.getPhoto() : c.getPhoto());
-        c.setId(id);
+            // System.out.println("here update  id is "+id+" aadress is  "+c.getAdress());
+            //User oldUser = new User();
+            User oldUser = userRepository.findById(id).orElse(null);
+            c.setUsername(c.getUsername() == null ? oldUser.getUsername() : c.getUsername());
+            c.setEmail(c.getEmail() == null ? oldUser.getEmail() : c.getEmail());
+            c.setAdress(c.getAdress() == null ? oldUser.getAdress() : c.getAdress());
+            c.setAdress(c.getPhone() == null ? oldUser.getPhone() : c.getPhone());
+            c.setPassword(oldUser.getPassword());
+            c.setRoles(oldUser.getRoles());
+            c.setPhoto(c.getPhoto() == null ? oldUser.getPhoto() : c.getPhoto());
+            c.setId(id);
             return new Response<User>("200","User updated", userRepository.save(c));
 
 
@@ -240,4 +241,3 @@ public class AuthController {
 
 
 }
-

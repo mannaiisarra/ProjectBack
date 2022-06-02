@@ -76,6 +76,7 @@ public class ThemeController {
 
             Theme oldUser = iTheme.findById(id).orElse(null);
             c.setTheme_titre(c.getTheme_titre() == null ? oldUser.getTheme_titre() : c.getTheme_titre());
+            c.setFormation(c.getFormation() == null ? oldUser.getFormation() : c.getFormation());
             c.setId(id);
             return new Response<Theme>("200","Theme updated", iTheme.save(c));
             }catch (Exception e){
@@ -85,9 +86,8 @@ public class ThemeController {
     }
 
     @GetMapping("/chercher/{id}")
-    public Response<List<Theme>> getAllCategoryByName(@PathVariable("id") Long id) {
+    public Response<List<Theme>> getAllThemeByFormation(@PathVariable("id") Long id) {
 
-        System.out.println(id);
         return  new Response<List<Theme>>("200","get formation by theme",iTheme.getAllThemeByFormation(id));
 
     }

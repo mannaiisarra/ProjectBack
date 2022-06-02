@@ -21,6 +21,9 @@ public class Etape implements Serializable {
     private  String step_titre;
     @Column(name = "description", nullable = false)
     private  String description;
+    @Column(name = "nombre_des_heurs", nullable = false)
+    private  String nombre_des_heurs;
+
 
 
     @ManyToOne
@@ -58,4 +61,14 @@ public class Etape implements Serializable {
     public void setTheme(Theme theme) {
         this.theme = theme;
     }
+
+    public String getNombre_des_heurs() {
+        return nombre_des_heurs;
+    }
+
+    public void setNombre_des_heurs(String nombre_des_heurs) {
+        this.nombre_des_heurs = nombre_des_heurs;
+    }
+
+
 }

@@ -38,15 +38,19 @@ public class Formation implements Serializable {
     private String date_defin;
 
 
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable( name = "users_formation",
             joinColumns = @JoinColumn( name = "id_User" ),
             inverseJoinColumns = @JoinColumn( name = "id_fomation" ) )
-    private List<User> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();*/
 
    @JsonSerialize(using = CustomListtSerializerTheme.class)
     @OneToMany(targetEntity = Theme.class, cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "formation")
     private List<Theme> themes = new ArrayList<>();
+
+    //@JsonSerialize(using = CustomSerializerFormation.class)
+    @OneToMany(targetEntity = Demande.class, cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "formationn")
+    private List<Demande> demandes;
 
 
 
@@ -99,13 +103,13 @@ public class Formation implements Serializable {
         this.photo = photo;
     }
 
-    public List<User> getUsers() {
+    /*public List<User> getUsers() {
         return users;
     }
 
     public void setUsers(List<User> users) {
         this.users = users;
-    }
+    }*/
 
     public List<Theme> getThemes() {
         return themes;
@@ -113,5 +117,13 @@ public class Formation implements Serializable {
 
     public void setThemes(List<Theme> themes) {
         this.themes = themes;
+    }
+
+    public List<Demande> getDemandes() {
+        return demandes;
+    }
+
+    public void setDemandes(List<Demande> demandes) {
+        this.demandes = demandes;
     }
 }
