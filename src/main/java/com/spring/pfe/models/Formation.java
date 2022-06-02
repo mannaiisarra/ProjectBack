@@ -37,6 +37,9 @@ public class Formation implements Serializable {
 
     private String date_defin;
 
+    @JsonSerialize(using = CustomListtSerializerDemande.class)
+    @OneToMany(targetEntity = Demande.class, cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "formationn")
+    private List<Demande> demandes;
 
     /*@ManyToMany
     @JoinTable( name = "users_formation",
@@ -48,9 +51,6 @@ public class Formation implements Serializable {
     @OneToMany(targetEntity = Theme.class, cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "formation")
     private List<Theme> themes = new ArrayList<>();
 
-    //@JsonSerialize(using = CustomSerializerFormation.class)
-    @OneToMany(targetEntity = Demande.class, cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "formationn")
-    private List<Demande> demandes;
 
 
 

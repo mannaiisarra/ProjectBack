@@ -46,15 +46,9 @@ public class User  implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
 
+    @JsonSerialize(using = CustomListtSerializerDemande.class)
     @OneToMany(targetEntity = Demande.class, cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "users")
     private List<Demande> demandes;
-
-    /*@ManyToMany
-    @JoinTable( name = "users_formation",
-            joinColumns = @JoinColumn( name = "id_User" ),
-            inverseJoinColumns = @JoinColumn( name = "id_fomation" ) )
-    private List<Formation> formation = new ArrayList<>();
-*/
 
     public User(String username, String email, String password) {
         this.username = username;
@@ -143,15 +137,6 @@ public class User  implements Serializable {
     public void setDemandes(List<Demande> demandes) {
         this.demandes = demandes;
     }
-/*
-    public List<Formation> getFormation() {
-        return formation;
-    }
-
-    public void setFormation(List<Formation> formation) {
-        this.formation = formation;
-    }
-    */
 
     public User() {
     }
