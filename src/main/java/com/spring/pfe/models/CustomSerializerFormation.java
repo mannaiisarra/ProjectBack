@@ -28,6 +28,10 @@ public class CustomSerializerFormation extends StdSerializer<Formation> {
 
         theme.setTitre(item.getTitre());
         theme.setDescription(item.getDescription());
+        theme.setPhoto(item.getPhoto());
+        theme.setDate_deDebut(item.getDate_deDebut());
+        theme.setDate_defin(item.getDate_defin());
+
         generator.writeObject(theme);
     }
 }

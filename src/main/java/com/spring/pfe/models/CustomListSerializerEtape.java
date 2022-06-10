@@ -9,25 +9,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomListtSerializerDemande extends StdSerializer<List<Demande>> {
+public class CustomListSerializerEtape extends StdSerializer<List<Etape>> {
 
-    public CustomListtSerializerDemande() {
+    public CustomListSerializerEtape() {
         this(null);
     }
 
-    public CustomListtSerializerDemande(Class<List<Demande>> t) {
+    public CustomListSerializerEtape(Class<List<Etape>> t) {
         super(t);
     }
 
     @Override
     public void serialize(
-            List<Demande> items,
+            List<Etape> items,
             JsonGenerator generator,
             SerializerProvider provider)
             throws IOException, JsonProcessingException {
 
-        List<Demande> ids = new ArrayList<>();
-        for (Demande item : items) {
+        List<Etape> ids = new ArrayList<>();
+        for (Etape item : items) {
             ids.add(item);
         }
         generator.writeObject(ids);

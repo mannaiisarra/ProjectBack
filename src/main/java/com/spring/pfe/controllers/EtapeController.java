@@ -1,10 +1,7 @@
 package com.spring.pfe.controllers;
 
 
-import com.spring.pfe.models.Etape;
-import com.spring.pfe.models.Formation;
-import com.spring.pfe.models.Response;
-import com.spring.pfe.models.Theme;
+import com.spring.pfe.models.*;
 import com.spring.pfe.repository.EtapeRepository;
 import com.spring.pfe.repository.ThemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +18,10 @@ public class EtapeController {
     @Autowired
     private ThemeRepository iTheme;
 
+
+    @Autowired
+    private EtapeRepository etapeRepository;
+
     @GetMapping("/")
     public Response<List<Etape>> findAllFormation () {
         System.out.println("affichage");
@@ -30,14 +31,15 @@ public class EtapeController {
     @RequestMapping(value="/add/{theme_id}", method= RequestMethod.POST)
     public Response<Etape> addEtape(@RequestBody Etape p,@PathVariable Long theme_id) {
         try {
-            if(p!=null) {
+
+
+
                 Theme t = iTheme.findById(theme_id).orElse(null);
                 p.setTheme(t);
+              //  p.setNameEtapes(n);
 
                 return new Response<Etape>("200", "Creat Etape", iTape.save(p));
-            } else {
-                return new Response<Etape>("500", "Etape not found", null);
-            }
+
         } catch (Exception e) {
             return new Response<Etape>("406", e.getMessage(), null);
         }
@@ -86,6 +88,8 @@ public class EtapeController {
         return  new Response<List<Etape>>("200","get formation by theme",iTape.getAllEtapeByTheme(id));
 
     }
+
+
 
 
 }

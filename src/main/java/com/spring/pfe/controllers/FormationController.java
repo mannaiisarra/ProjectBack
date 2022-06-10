@@ -46,16 +46,16 @@ public class FormationController {
         }
 
     }
-    @RequestMapping(value="/adUser", method= RequestMethod.POST)
-    public Response<Formation> addUser(Formation p, @RequestParam("id_user") Long id_user) {
+    @RequestMapping(value="/adUser/{users_id}", method= RequestMethod.POST)
+    public Response<Formation> addUserToFormation(Formation p, @RequestParam("id_user") Long users_id) {
         try {
             if(p!=null) {
-             User u = iuser.findById(id_user).orElse(null);
+             User u = iuser.findById(users_id).orElse(null);
              System.out.println(u);
 
-                return new Response<Formation>("200", "Creat formation", FormationRepository.save(p));
+                return new Response<Formation>("200", "Creat user To formation", FormationRepository.save(p));
             } else {
-                return new Response<Formation>("500", "formation not found", null);
+                return new Response<Formation>("500", "User not found", null);
             }
         } catch (Exception e) {
             return new Response<Formation>("406", e.getMessage(), null);

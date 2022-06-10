@@ -115,10 +115,6 @@ public class Formation implements Serializable {
         return themes;
     }
 
-    public void setThemes(List<Theme> themes) {
-        this.themes = themes;
-    }
-
     public List<Demande> getDemandes() {
         return demandes;
     }
@@ -126,4 +122,9 @@ public class Formation implements Serializable {
     public void setDemandes(List<Demande> demandes) {
         this.demandes = demandes;
     }
+
+    public void setThemes(List<Theme> themes) {
+        this.themes = themes;
+    }
+
 }

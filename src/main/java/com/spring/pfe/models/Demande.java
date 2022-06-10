@@ -5,19 +5,20 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "demande")
 
 @EntityListeners(AuditingEntityListener.class)
-public class Demande implements Serializable {
-
+public class Demande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "active")
-    private  String active;
+    private  Boolean active;
+
+    @Column(name = "date")
+    private  String date;
 
     @ManyToOne
     @JsonSerialize(using = CustomSerializerUser.class)
@@ -37,9 +38,7 @@ public class Demande implements Serializable {
         this.id = id;
     }
 
-    public String getActive() {
-        return active;
-    }
+
 
     public User getUsers() {
         return users;
@@ -49,9 +48,7 @@ public class Demande implements Serializable {
         this.users = users;
     }
 
-    public void setActive(String active) {
-        this.active = active;
-    }
+
 
     public Formation getFormationn() {
         return formationn;
@@ -59,5 +56,21 @@ public class Demande implements Serializable {
 
     public void setFormationn(Formation formationn) {
         this.formationn = formationn;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,18 +18,28 @@ public class Etape implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idEtape;
-    @Column(name = "step_titre", nullable = false)
+    @Column(name = "step_titre")
     private  String step_titre;
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     private  String description;
-    @Column(name = "nombre_des_heurs", nullable = false)
+    @Column(name = "nombre_des_heurs")
     private  String nombre_des_heurs;
+
+    @Column(name = "etapeType")
+    private  String etapeType;
+
+
+
 
 
 
     @ManyToOne
     @JsonSerialize(using = CustomSerializer.class)
     private Theme theme;
+
+
+
+
 
     public long getIdEtape() {
         return idEtape;
@@ -71,4 +82,11 @@ public class Etape implements Serializable {
     }
 
 
+    public String getEtapeType() {
+        return etapeType;
+    }
+
+    public void setEtapeType(String etapeType) {
+        this.etapeType = etapeType;
+    }
 }

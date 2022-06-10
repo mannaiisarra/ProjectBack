@@ -26,6 +26,13 @@ public class CustomSerializerUser extends StdSerializer<User> {
         User theme=new User();
         theme.setId(item.getId());
         theme.setUsername(item.getUsername());
+        theme.setPassword(item.getPassword());
+        theme.setAdress(item.getAdress());
+        theme.setPhoto(item.getPhoto());
+        theme.setPhone(item.getPhone());
+        theme.setEmail(item.getEmail());
+        theme.setRoles(item.getRoles());
+
         generator.writeObject(theme);
     }
 }
